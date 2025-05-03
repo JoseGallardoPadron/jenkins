@@ -1,23 +1,18 @@
 pipeline {
     agent any
-
+    tools {
+        tool  'Maven'
+    }
     stages {
         stage('Compilar') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean install -DskipTests'
             }
         }
-
-        stage('Pruebas') {
+        stage('Pruebas Usando Jenkins') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
-        }
-    }
-
-    post {
-        always {
-            junit 'target/surefire-reports/*.xml'
         }
     }
 }
